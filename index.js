@@ -20,10 +20,9 @@ var store = [
   {"name":"alondra3", "age": 11},
 ]
 
-app.get('/categorias', function (req, res) {
-  let { items, page } = req.query
 
-  items = Number(items)
+function paginator(itemsPerPage, page) {
+  let items = Number(itemsPerPage)
   let currentPage = Number(page)
 
   /* Calculate paginator limits */
@@ -66,6 +65,7 @@ app.get('/categorias', function (req, res) {
   /* extract elements from the store position */
   let result = _.slice(store, fromIndex, toIndex)
 
+  /* Custom index payload */
   let payload = {
     data: {
       items: result,
@@ -80,7 +80,16 @@ app.get('/categorias', function (req, res) {
     }
   }
 
-  res.status(200).json(payload)
+  return payload
+}
+
+// URI: /categorias?page=3&items=5
+app.get('/categorias', function (req, res) {
+  let { items, page } = req.query
+
+  let result = paginator(items, page)
+
+  res.status(200).json(result)
 });
 
 app.listen(3000, function () {
