@@ -1,5 +1,4 @@
 var express = require('express');
-var _ = require('lodash')
 var app = express();
 var store = require('./store')
 
@@ -9,7 +8,7 @@ var Utils = require('./utils')
 app.get('/categorias', function (req, res) {
   let { items, page } = req.query
 
-  let result = Utils.paginator(items, page)
+  let result = Utils.paginator(store, items, page)
 
   res.status(200).json(result)
 });

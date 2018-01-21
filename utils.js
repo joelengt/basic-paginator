@@ -1,5 +1,6 @@
+var _ = require('lodash')
 
-module.exports.paginator = function(itemsPerPage, page) {
+module.exports.paginator = function(store, itemsPerPage, page) {
   let items = Number(itemsPerPage)
   let currentPage = Number(page)
 
